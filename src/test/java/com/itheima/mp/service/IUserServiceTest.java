@@ -1,4 +1,4 @@
-package com.itheima.mp.domain.service;
+package com.itheima.mp.service;
 
 import com.itheima.mp.domain.po.User;
 import org.junit.jupiter.api.Test;

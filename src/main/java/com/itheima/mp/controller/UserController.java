@@ -1,17 +1,15 @@
-package com.itheima.mp.domain.controller;
+package com.itheima.mp.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.itheima.mp.domain.dto.UserFormDTO;
 import com.itheima.mp.domain.po.User;
-import com.itheima.mp.domain.service.IUserService;
+import com.itheima.mp.domain.query.UserQuery;
+import com.itheima.mp.service.IUserService;
 import com.itheima.mp.domain.vo.UserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,5 +50,11 @@ public class UserController {
     @PutMapping("{id}/deduction/{money}")
     public void deductUserBalanceById(@ApiParam("用户id") @PathVariable Long id, @ApiParam("金额") @PathVariable Integer money){
         userService.deductUserBalanceById(id,money);
+    }
+    @ApiOperation("根据复杂条件查询用户接口")
+    @GetMapping("/list")
+    public List<UserVO> queryUsers(UserQuery userQuery){
+        List<User> users = userService.quertUsers(userQuery.getName(),userQuery.getMaxBalance(),userQuery.getMinBalance(),userQuery.getStatus());
+        return BeanUtil.copyToList(users,UserVO.class);
     }
 }
